@@ -1,4 +1,5 @@
 import signupSchema from "../schemas/signupSchema.js";
+import signInSchema from "../schemas/signinSchema.js";
 
 export function signUpValidationMiddleware(req, res, next) {
   const user = {
@@ -17,5 +18,17 @@ export function signUpValidationMiddleware(req, res, next) {
     return;
   }
 
+  next();
+}
+
+export function signInValidationMiddleware(req, res, next) {
+  const validation = signInSchema.validate(req.body, { abortEarly: false });
+
+  if (validation.error) {
+    const errors = validation.error.details.map((detail) => detail.message);
+    res.sendStatus(422);
+    console.log(errors);
+    return;
+  }
   next();
 }
