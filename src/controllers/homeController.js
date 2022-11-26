@@ -1,30 +1,31 @@
-import { sessionsColl, prodsColl } from "../index.js";
+import { sessionsColl, prodsColl } from "../../index.js";
 
 export async function home(req, res) {
-  const { authorization } = req.headers;
-  const token = authorization?.replace("Bearer ", "");
+  // const { authorization } = req.headers;
+  // const token = authorization?.replace("Bearer ", "");
 
-  if (!token) {
-    res.sendStatus(500);
-    return;
-  }
+  // if (!token) {
+  //   res.sendStatus(500);
+  //   return;
+  // }
 
-  const session = await sessionsColl.findOne({ token });
-  console.log(session);
-  if (!session) {
-    res.sendStatus(401);
-    return;
-  }
+  // const session = await sessionsColl.findOne({ token });
+  // console.log(session);
+  // if (!session) {
+  //   res.sendStatus(401);
+  //   return;
+  // }
 
 
-  const prodsArray = await prodsColl.find().toArray();
+try{
+  const dogProds = await prodsColl.find({"type": "dog"}).toArray();
+  const catProds = await prodsColl.find({"type":"cat"}).toArray();
 
-  //separar array de gatos e dogs
-  //enviar duas arrays
+  res.status(201).send({dogProds, catProds});
+}
+catch(err){
+  res.sendStatus(401);
+}
 
-  if (prodsArray) {
-    res.send(prodsArray);
-  } else {
-    res.sendStatus(401);
-  }
+
 }
