@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import { v4 as uuidV4 } from "uuid";
+import { usersColl } from '../../index.js';
 
 export async function signUp (req, res) {
     const { name, email, password, confirmp } = req.body;
