@@ -56,3 +56,17 @@ export async function signIn(req, res) {
     res.status(401).send("Usuário e/ou senha estão incorretos.");
   }
 }
+
+export async function signOut(req, res) {
+  const { token } = req.headers;
+  try {
+    const session = await sessionsColl.findOne({ token });
+    if (!session) {
+      return res.send("Não foi possível localizar a sessão!");
+    }
+    await sessionsColl.deleteOne({ token });
+    res.send("Sessão encerrada!");
+  } catch (err) {
+    res.send(err);
+  }
+}
