@@ -12,6 +12,7 @@ app.use(cors())
 export const usersColl = db.collection("users");
 export const sessionsColl = db.collection("sessions");
 export const prodsColl = db.collection("products");
+export const tempCartColl = db.collection("tempcart")
 
 app.use(authRouter)
 app.use(homeRouter)

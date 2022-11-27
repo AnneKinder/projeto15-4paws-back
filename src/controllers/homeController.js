@@ -1,4 +1,4 @@
-import { sessionsColl, prodsColl } from "../../index.js";
+import { sessionsColl, prodsColl, tempCartColl } from "../../index.js";
 
 export async function home(req, res) {
   // const { authorization } = req.headers;
@@ -16,16 +16,24 @@ export async function home(req, res) {
   //   return;
   // }
 
+  try {
+    const dogProds = await prodsColl.find({ type: "dog" }).toArray();
+    const catProds = await prodsColl.find({ type: "cat" }).toArray();
 
-try{
-  const dogProds = await prodsColl.find({"type": "dog"}).toArray();
-  const catProds = await prodsColl.find({"type":"cat"}).toArray();
-
-  res.status(201).send({dogProds, catProds});
+    res.status(201).send({ dogProds, catProds });
+  } catch (err) {
+    res.sendStatus(401);
+  }
 }
-catch(err){
-  res.sendStatus(401);
-}
 
+export async function postTempCart(req, res){
+  const tempCart = req.body
 
+  try{
+    await tempCartColl.insertMany(tempCart)
+    //insert token/session also
+    res.sendStatus(201)
+   }catch(err){
+    res.send(err)
+   }
 }
