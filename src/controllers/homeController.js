@@ -31,7 +31,6 @@ export async function postTempCart(req, res) {
 
   try {
     await tempCartColl.insertMany(tempCart);
-    //insert token/session also
     res.sendStatus(201);
   } catch (err) {
     res.send(err);
