@@ -1,20 +1,20 @@
 import { sessionsColl, prodsColl, tempCartColl } from "../../index.js";
 
 export async function home(req, res) {
-  // const { authorization } = req.headers;
-  // const token = authorization?.replace("Bearer ", "");
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
 
-  // if (!token) {
-  //   res.sendStatus(500);
-  //   return;
-  // }
+  if (!token) {
+    res.sendStatus(500);
+    return;
+  }
 
-  // const session = await sessionsColl.findOne({ token });
-  // console.log(session);
-  // if (!session) {
-  //   res.sendStatus(401);
-  //   return;
-  // }
+  const session = await sessionsColl.findOne({ token });
+  console.log(session);
+  if (!session) {
+    res.sendStatus(401);
+    return;
+  }
 
   try {
     const dogProds = await prodsColl.find({ type: "dog" }).toArray();
@@ -26,14 +26,14 @@ export async function home(req, res) {
   }
 }
 
-export async function postTempCart(req, res){
-  const tempCart = req.body
+export async function postTempCart(req, res) {
+  const tempCart = req.body;
 
-  try{
-    await tempCartColl.insertMany(tempCart)
+  try {
+    await tempCartColl.insertMany(tempCart);
     //insert token/session also
-    res.sendStatus(201)
-   }catch(err){
-    res.send(err)
-   }
+    res.sendStatus(201);
+  } catch (err) {
+    res.send(err);
+  }
 }
