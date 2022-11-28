@@ -26,7 +26,7 @@ export function signInValidationMiddleware(req, res, next) {
 
   if (validation.error) {
     const errors = validation.error.details.map((detail) => detail.message);
-    res.sendStatus(422);
+    res.status(422).send("Usuário e/ou senha estão incorretos");
     console.log(errors);
     return;
   }

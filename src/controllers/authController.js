@@ -50,10 +50,9 @@ export async function signIn(req, res) {
       token,
       userId: userData._id,
     });
-
-    res.send({ userData, token });
+    res.status(200).send({ userData, token });
   } else {
-    res.status(401).send("Usuário e/ou senha estão incorretos.");
+    return res.status(401).send("Usuário e/ou senha estão incorretos.");
   }
 }
 
