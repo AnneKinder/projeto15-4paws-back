@@ -29,14 +29,13 @@ export async function home(req, res) {
 export async function postNewItem(req, res) {
   const { image, title, subtitle, price, type } = req.body;
 
-
   try {
     await prodsColl.insertOne({
       image: image,
       title: title,
       subtitle: subtitle,
       price: price,
-      type: type
+      type: type,
     });
     res.status(201).send(title);
   } catch (err) {
