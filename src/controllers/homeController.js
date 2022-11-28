@@ -1,4 +1,4 @@
-import { sessionsColl, prodsColl, tempCartColl } from "../../index.js";
+import { sessionsColl, prodsColl } from "../../index.js";
 
 export async function home(req, res) {
   const { authorization } = req.headers;
@@ -26,39 +26,12 @@ export async function home(req, res) {
   }
 }
 
-// export async function postTempCart(req, res) {
-//   const tempCart = req.body;
-
-//   try {
-//     await tempCartColl.insertMany(tempCart);
-//     res.sendStatus(201);
-//   } catch (err) {
-//     res.send(err);
-//   }
-// }
-
-// export async function postNewItem(req, res) {
-//   try {
-//     await prodsColl.insertOne(req.body);
-//     res.status(201).send(req.body);
-//   } catch (err) {
-//     res.send(err);
-//   }
-// }
-
 export async function postNewItem(req, res) {
   const { image, title, subtitle, price, type } = req.body;
 
- 
-  // const item = {
-  //   image,
-  //   title,
-  //   subtitle,
-  //   price,
-  // };
 
   try {
-    await usersColl.insertOne({
+    await prodsColl.insertOne({
       image: image,
       title: title,
       subtitle: subtitle,
